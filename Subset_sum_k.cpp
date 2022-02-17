@@ -1,5 +1,5 @@
 // https://www.codingninjas.com/codestudio/problems/subset-sum-equal-to-k_1550954?leftPanelTab=1
-//....................MEMOIZATION
+//....................................................................MEMOIZATION
 bool f(int ind,int target,vector<int>&arr,vector<vector<int>>&dp){
     if(target==0)return true;
     if(ind==0)return (arr[0]==target);
@@ -14,7 +14,7 @@ bool subsetSumToK(int n, int k, vector<int> &arr) {
     return f(n-1,k,arr,dp);
 	}
 
-    //...............Tabulation
+    //................................................................Tabulation
         bool subsetSumToK(int n, int k, vector<int> &arr) {
         vector<vector<bool> >dp(n,vector<bool>(k+1,0));
         for(int j=0;j<n;j++)dp[j][0]=true;
