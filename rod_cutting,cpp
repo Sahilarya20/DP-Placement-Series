@@ -1,0 +1,64 @@
+//https://www.codingninjas.com/codestudio/problems/rod-cutting-problem_800284?source=youtube&campaign=striver_dp_videos&utm_source=youtube&utm_medium=affiliate&utm_campaign=striver_dp_videos&leftPanelTab=1
+
+//...............................................Memoization
+int f(int ind,int n,vector<int>&a, vector<vector<int>>&dp){
+    
+    if(ind==0){
+        return (n*a[ind]);
+    }
+    if(dp[ind][n]!=-1)return dp[ind][n];
+    int ntake=0+f(ind-1,n,a,dp);
+    int take=INT_MIN;
+    int rodLength=ind+1;
+    if(rodLength<=n)take=a[ind]+f(ind,n-rodLength,a,dp);
+    return dp[ind][n]=max(take,ntake);
+    
+    
+}
+int cutRod(vector<int> &price, int n)
+{
+    vector<vector<int>>dp(n,vector<int>(n+1,-1));
+    return f(n-1,n,price,dp);
+}
+
+//.................................................Tabualation
+int cutRod(vector<int> &price, int n)
+{
+    vector<vector<int>>dp(n,vector<int>(n+1,0));
+
+    for(int i=0;i<=n;i++){
+        dp[0][i]=i*price[0];
+    }
+    for(int ind=1;ind<n;ind++){
+        for(int N=0;N<=n;N++){
+            int ntake=0+dp[ind-1][N];
+            int take=INT_MIN;
+            int rodLength=ind+1;
+            if(rodLength<=N)take=price[ind]+dp[ind][N-rodLength];
+           dp[ind][N]=max(take,ntake);
+        }
+    }
+    return dp[n-1][n];
+}
+
+
+//..................................................space optimization
+int cutRod(vector<int> &price, int n)
+{
+
+    vector<int>prev(n+1,0),curr(n+1,0);
+    for(int i=0;i<=n;i++){
+        prev[i]=i*price[0];
+    }
+    for(int ind=1;ind<n;ind++){
+        for(int N=0;N<=n;N++){
+            int ntake=0+prev[N];
+            int take=INT_MIN;
+            int rodLength=ind+1;
+            if(rodLength<=N)take=price[ind]+curr[N-rodLength];
+          curr[N]=max(take,ntake);
+        }
+        prev=curr;
+    }
+    return prev[n];
+}
