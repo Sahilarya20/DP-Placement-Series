@@ -30,7 +30,7 @@ int minimumElements(vector<int> &num, int x)
 //     int ans= f(n-1,x,num,dp);
 //     if(ans>=1e9)return -1;
 //     return ans;
-    for(int i=0;i<=x;i++){
+    for(int i=0;i<=x;i++){}
         if(i%num[0]==0)dp[0][i]=i/num[0];
         else dp[0][i]=1e9;
     }
